@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blynzo</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#f5f5f5;
+}
+
+.login-page{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#f5f5f5;
+}
+
+.login-box{
+width:360px;
+background:#fff;
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 20px rgba(0,0,0,.15);
+text-align:center;
+}
+
+.logo{
+font-size:35px;
+font-weight:bold;
+color:#0a8f3d;
+margin-bottom:10px;
+}
+
+.login-box p{
+margin-bottom:20px;
+color:#555;
+}
+
+input{
+width:100%;
+padding:13px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:10px;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:13px;
+background:#0a8f3d;
+color:white;
+border:none;
+border-radius:10px;
+font-size:17px;
+cursor:pointer;
+}
+
+button:hover{
+background:#087233;
+}
+
+.guest{
+margin-top:10px;
+background:#555;
+}
+
+.home-page{
+display:none;
+}
+
+.topbar{
+background:#0a8f3d;
+padding:15px;
+color:white;
+text-align:center;
+font-size:22px;
+font-weight:bold;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="login-page" id="login">
+
+<div class="login-box">
+
+<div class="logo">Blynzo</div>
+
+<p>Customer Login</p>
+
+<input type="text" placeholder="Mobile Number">
+
+<input type="password" placeholder="Password">
+
+<button onclick="login()">Login</button>
+
+<button class="guest" onclick="login()">Continue as Guest</button>
+
+</div>
+
+</div>
+
+<div class="home-page" id="home">
+
+<div class="topbar">
+Blynzo
+</div>
+
+<h2 style="padding:20px;">
+Welcome to Blynzo
+</h2>
+
+</div>
+
+<script>
+
+function login(){
+
+document.getElementById("login").style.display="none";
+
+document.getElementById("home").style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
+
+<!-- ========= Bottom Navigation ========= -->
+
+<style>
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:70px;
+background:#fff;
+display:flex;
+justify-content:space-around;
+align-items:center;
+box-shadow:0 -2px 10px rgba(0,0,0,.15);
+z-index:999;
+}
+
+.nav-item{
+text-align:center;
+font-size:13px;
+color:#555;
+cursor:pointer;
+}
+
+.nav-item i{
+display:block;
+font-size:24px;
+margin-bottom:4px;
+}
+
+.nav-item.active{
+color:#8e24aa;
+font-weight:bold;
+}
+
+.floating-cart{
+position:fixed;
+right:20px;
+bottom:90px;
+width:60px;
+height:60px;
+background:#8e24aa;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:28px;
+box-shadow:0 5px 15px rgba(0,0,0,.3);
+cursor:pointer;
+animation:cartJump 2s infinite;
+}
+
+@keyframes cartJump{
+
+0%{transform:translateY(0);}
+50%{transform:translateY(-8px);}
+100%{transform:translateY(0);}
+
+}
+
+.offer-strip{
+background:linear-gradient(90deg,#8e24aa,#ff4081);
+color green;
+padding:12px;
+font-size:16px;
+font-weight:bold;
+text-align:center;
+overflow:hidden;
+white-space:nowrap;
+}
+
+.offer-strip span{
+display:inline-block;
+padding-left:100%;
+animation:moveText 12s linear infinite;
+}
+
+@keyframes moveText{
+
+0%{transform:translateX(0);}
+100%{transform:translateX(-100%);}
+
+}
+
+</style>
+
+
+<div class="floating-cart">
+
+🛒
+
+</div>
+
+<div class="bottom-nav">
+
+<div class="nav-item active">
+
+<i>home</i>
+
+Home
+
+</div>
+
+<div class="nav-item">
+
+<i>📂</i>
+
+Categories
+
+</div>
+
+<div class="nav-item">
+
+<i>❤️</i>
+
+Wishlist
+
+</div>
+
+<div class="nav-item">
+
+<i>🛒</i>
+
+Cart
+
+</div>
+
+<div class="nav-item">
+
+<i>👤</i>
+
+Profile
+
+</div>
+
+</div>
+<!-- ================= PRODUCT DETAILS ================= -->
+
+<style>
+
+#productPopup{
+display:none;
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.6);
+z-index:9999;
+}
+
+.popup-box{
+position:absolute;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+width:95%;
+max-width:420px;
+background:#fff;
+border-radius:18px;
+overflow:hidden;
+}
+
+.popup-box img{
+width:100%;
+height:320px;
+object-fit:cover;
+}
+
+.popup-content{
+padding:15px;
+}
+
+.popup-title{
+font-size:22px;
+font-weight:bold;
+}
+
+.popup-price{
+font-size:26px;
+color:#8e24aa;
+font-weight:bold;
+margin:10px 0;
+}
+
+.popup-desc{
+font-size:15px;
+color:#555;
+line-height:24px;
+}
+
+.popup-buttons{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+.popup-buttons button{
+flex:1;
+padding:14px;
+border:none;
+border-radius:10px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.addcart{
+background:#ff9800;
+color:white;
+}
+
+.buynow{
+background:#8e24aa;
+color:white;
+}
+
+.closePopup{
+position:absolute;
+top:10px;
+right:15px;
+font-size:30px;
+cursor:pointer;
+font-weight:bold;
+}
+
+</style>
+
+<div id="productPopup">
+
+<div class="popup-box">
+
+<div class="closePopup" onclick="closeProduct()">
+×
+</div>
+
+<img id="popupImg" src="">
+
+<div class="popup-content">
+
+<div class="popup-title" id="popupTitle">
+Product
+</div>
+
+<div class="popup-price" id="popupPrice">
+₹0
+</div>
+
+<div class="popup-desc">
+
+Premium Quality Product
+
+7 Days Return
+
+Cash On Delivery Available
+
+Free Delivery
+
+</div>
+
+<div class="popup-buttons">
+
+<button class="addcart" onclick="alert('Added Successfully')">
+
+Add Cart
+
+</button>
+
+<button class="buynow">
+
+Buy Now
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let cards=document.querySelectorAll(".product");
+
+cards.forEach(function(card){
+
+card.onclick=function(){
+
+let img=card.querySelector("img").src;
+
+let title=card.querySelector(".name").innerText;
+
+let price=card.querySelector(".price").innerText;
+
+document.getElementById("popupImg").src=img;
+
+document.getElementById("popupTitle").innerText=title;
+
+document.getElementById("popupPrice").innerText=price;
+
+document.getElementById("productPopup").style.display="block";
+
+}
+
+})
+
+function closeProduct(){
+
+document.getElementById("productPopup").style.display="none";
+
+}
+
+</script>
+
+<!-- ================= CATEGORIES ================= -->
+
+<style>
+
+.category-section{
+background:#fff;
+padding:15px 10px;
+margin-top:8px;
+}
+
+.category-scroll{
+display:flex;
+overflow-x:auto;
+gap:18px;
+padding-bottom:8px;
+scroll-behavior:smooth;
+}
+
+.category-scroll::-webkit-scrollbar{
+display:none;
+}
+
+.category-item{
+min-width:80px;
+text-align:center;
+cursor:pointer;
+}
+
+.category-circle{
+width:70px;
+height:70px;
+border-radius:50%;
+background:linear-gradient(135deg,#f8f0ff,#e6f4ff);
+display:flex;
+align-items:center;
+justify-content:center;
+margin:auto;
+box-shadow:0 3px 10px rgba(0,0,0,.12);
+transition:.3s;
+font-size:32px;
+}
+
+.category-item:hover .category-circle{
+transform:scale(1.08);
+}
+
+.category-item p{
+margin-top:8px;
+font-size:13px;
+font-weight:600;
+color:#333;
+}
+
+</style>
+
+<div class="category-section">
+
+<div class="category-scroll">
+
+<div class="category-item">
+<div class="category-circle">🛍️</div>
+<p>All</p>
+</div>
+
+<div class="category-item">
+<div class="category-circle">👗</div>
+<p>Kurtis</p>
+</div>
+
+<div class="category-item">
+<div class="category-circle">👕</div>
+<p>Men</p>
+</div>
+
+<div class="category-item">
+<div class="category-circle">👶</div>
+<p>Kids</p>
+</div>
+
+<div class="category-item">
+<div class="category-circle">💄</div>
+<p>Beauty</p>
+</div>
+
+<div class="category-item">
+<div class="category-circle">👟</div>
+<p>Shoes</p>
+</div>
+
+<div class="category-item">
+<div class="category-circle">🏠</div>
+<p>Home</p>
+</div>
+
+<div class="category-item">
+<div class="category-circle">🔆</div>
+<p>Jewellery</p>
+</div>
+
+<div class="category-item">
+<div class="category-circle">📱</div>
+<p>Mobiles</p>
+</div>
+
+<div class="category-item">
+<div class="category-circle">👜</div>
+<p>Bags</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="left">
+
+</div>
+
+<div class="search">
+
+<input type="text" placeholder="Search by Keyword or Product ID">
+
+</div>
+
+</div>
+
+
